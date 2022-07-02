@@ -237,6 +237,10 @@ function GetRustIndent(lnum)
         return indent(prevlinenum)
     endif
 
+    if prevline[len(prevline) - 2:] ==# "];"
+        return indent(prevlinenum)
+    endif
+
     if !has("patch-7.4.355")
         " cindent before 7.4.355 doesn't do the module scope well at all; e.g.::
         "
