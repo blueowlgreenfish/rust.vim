@@ -274,6 +274,15 @@ function GetRustIndent(lnum)
         endif
     endif
 
+    if line =~# '\V\^\s\*)'
+        let l:paren_start = searchpair('(', '', ')', 'nbW',
+            \ 's:is_string_comment(line("."), col("."))')
+
+        if l:paren_start != 0 && l:paren_start < a:lnum
+            return indent(l:paren_start)
+        endif
+    endif
+
     " Fall back on cindent, which does it mostly right
     return cindent(a:lnum)
 endfunction
